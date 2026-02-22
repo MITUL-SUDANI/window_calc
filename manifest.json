@@ -1,0 +1,22 @@
+{
+    "name": "Window Dimension Calculator",
+    "short_name": "Window Calc",
+    "id": "./index.html",
+    "start_url": "./index.html",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#1976d2",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "assets/icon.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        },
+        {
+            "src": "assets/icon.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        }
+    ]
+}

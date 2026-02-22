@@ -1,0 +1,476 @@
+:root {
+    --primary-color: #1976d2;
+    --primary-dark: #115293;
+    --secondary-color: #ff4081;
+    --background-color: #f5f5f5;
+    --surface-color: #ffffff;
+    --text-color: #333333;
+    --text-secondary: #666666;
+    --error-color: #d32f2f;
+    --border-radius: 8px;
+    --spacing-unit: 16px;
+    --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.app-container {
+    width: 100%;
+    max-width: 480px;
+    /* Mobile-first limit */
+    background-color: var(--surface-color);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+}
+
+.app-header {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 10px var(--spacing-unit);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.app-header h1 {
+    flex: 1;
+}
+
+.icon-btn {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 2.5rem;
+    width: 38px;
+    height: 38px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.2s;
+    padding: 0;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.icon-btn:active {
+    opacity: 0.7;
+}
+
+.app-logo {
+    width: 38px;
+    height: 38px;
+    border-radius: 6px;
+}
+
+h1 {
+    font-size: 1.15rem;
+    font-weight: 500;
+}
+
+.calculator-form {
+    padding: 10px var(--spacing-unit);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Side-by-side row container */
+.input-row {
+    display: flex;
+    gap: 10px;
+}
+
+/* When subtype is hidden, type takes full width */
+.input-row.single-col .input-group.half {
+    flex: 1 1 100%;
+}
+
+/* Half-width input group inside a row */
+.input-group.half {
+    flex: 1;
+    min-width: 0;
+}
+
+/* When subtype is hidden, type takes full width */
+#subtypeGroup[hidden]+.input-group.half,
+.input-group.half:only-child {
+    flex: 1;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+label {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+input,
+select {
+    padding: 8px 10px;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+    font-size: 0.95rem;
+    background-color: #fafafa;
+    transition: border-color 0.2s;
+    width: 100%;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    background-color: white;
+}
+
+/* Hide Number Spinners */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+/* New Split Input Style */
+.measure-input {
+    display: flex;
+    gap: 10px;
+}
+
+.measure-input input {
+    flex: 2;
+    min-width: 0;
+}
+
+.measure-input select {
+    flex: 1;
+}
+
+.primary-btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.primary-btn:active {
+    background-color: var(--primary-dark);
+    transform: translateY(1px);
+}
+
+.button-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    align-items: stretch;
+}
+
+#calculateBtn {
+    flex: 0 0 75%;
+}
+
+#clearBtn {
+    flex: 1;
+}
+
+/* Disabled/Locked Input Styles */
+input:disabled,
+select:disabled {
+    background-color: #f0f0f0;
+    color: #888;
+    cursor: not-allowed;
+    border-color: #eee;
+}
+
+.secondary-btn {
+    background-color: transparent;
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    padding: 10px;
+    border-radius: var(--border-radius);
+    font-size: 0.9rem;
+    cursor: pointer;
+    text-align: center;
+}
+
+.danger-btn {
+    background-color: #ffebee;
+    color: var(--error-color);
+    border: none;
+    padding: 12px;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    cursor: pointer;
+    width: auto;
+}
+
+.results-section {
+    background-color: #fafafa;
+    padding: 5px var(--spacing-unit);
+    border-top: 1px solid #eee;
+    animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+h2 {
+    font-size: 1rem;
+    margin-bottom: 8px;
+    color: var(--primary-color);
+}
+
+.results-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+}
+
+.result-card {
+    background-color: white;
+    border: 1px solid #eee;
+    border-radius: var(--border-radius);
+    padding: 10px;
+    box-shadow: var(--box-shadow);
+}
+
+.result-card h3 {
+    margin-bottom: 6px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 4px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.result-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 6px;
+    font-size: 0.95rem;
+    gap: 4px;
+}
+
+.result-label {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    align-items: flex-start;
+    /* Ensures hint background only fits the text */
+}
+
+.formula-hint {
+    font-size: 0.65rem;
+    color: #555;
+    /* Darker text */
+    font-weight: 500;
+    background: #e8e8e8;
+    border-radius: 4px;
+    padding: 1px 5px;
+    display: inline-block;
+}
+
+.result-value {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--text-color);
+    white-space: nowrap;
+}
+
+.error-message {
+    color: var(--error-color);
+    background-color: #ffebee;
+    padding: 12px;
+    border-radius: var(--border-radius);
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.error-text {
+    color: var(--error-color);
+    font-weight: bold;
+}
+
+/* Ensure hidden attribute works */
+[hidden] {
+    display: none !important;
+}
+
+/* Modal Styles */
+.modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: var(--border-radius);
+    width: 100%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.large-modal {
+    max-width: 900px;
+    /* Wider for table */
+    height: 80vh;
+}
+
+.close {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #aaa;
+    z-index: 10;
+}
+
+.close:hover {
+    color: black;
+}
+
+/* Table Styles */
+.table-container {
+    flex: 1;
+    overflow-x: auto;
+    margin-top: 16px;
+    border: 1px solid #eee;
+    border-radius: 4px;
+}
+
+.formula-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+    /* Force scroll on small screens */
+}
+
+.formula-table th,
+.formula-table td {
+    border: 1px solid #eee;
+    padding: 8px;
+    text-align: left;
+    vertical-align: top;
+}
+
+.formula-table th {
+    background-color: #f9f9f9;
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--primary-color);
+    position: sticky;
+    top: 0;
+    background: #f5f5f5;
+    text-align: center;
+}
+
+.formula-table small {
+    font-weight: normal;
+    color: #666;
+    font-size: 0.8rem;
+}
+
+/* Cell Inputs */
+.cell-input-group {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+
+.cell-input-group select,
+.cell-input-group input {
+    padding: 4px;
+    font-size: 0.85rem;
+    border: 1px solid #ddd;
+}
+
+.cell-op {
+    width: 40px;
+}
+
+.cell-u {
+    width: 50px;
+}
+
+.cell-s {
+    width: 45px;
+}
+
+
+.modal-actions {
+    margin-top: 16px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+}
+
+/* Landscape Tablet & Desktop */
+@media (min-width: 600px) {
+    .app-container {
+        border-radius: 12px;
+        margin: 20px 0;
+        min-height: auto;
+    }
+}
