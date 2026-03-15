@@ -1,4 +1,4 @@
-const CACHE_NAME = 'window-calc-v11';
+const CACHE_NAME = 'window-calc-v12';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
