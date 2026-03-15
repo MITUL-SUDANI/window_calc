@@ -54,8 +54,17 @@ class Dimension {
         return result;
     }
 
+    divide(divisor) {
+        if (divisor <= 0) return this;
+        const total = this.toSubunits();
+        const resultNv = Math.floor(total / divisor);
+        const result = new Dimension();
+        result.fromSubunits(resultNv);
+        return result;
+    }
+
     toString() {
-        return `${this.u} unit ${this.s} sub`;
+        return `${this.u}u ${this.s}s`;
     }
 
     static from(u, s) {
@@ -68,126 +77,68 @@ window.Dimension = Dimension;
 const DEFAULT_CONFIG = {
     "40mm": {
         "2 Track": {
-            "Shutter Height": { source: 'H', op: '-', u: 1, s: 5 },
-            "Shutter Length": { source: 'L', op: '-', u: 0, s: 6 },
-            "Glass Height": { source: 'H', op: '-', u: 2, s: 4 },
-            "Glass Length": { source: 'L', op: '+', u: 0, s: 5 }
+            "Handle (H)": { source: 'TH', op: '-', u: 1, s: 4, div: 1 },
+            "Bearing Pati (B)": { source: 'TL', op: '-', u: 6, s: 4, div: 2 },
+            "Glass Height (GH)": { source: 'TH', op: '-', u: 4, s: 0, div: 1 },
+            "Glass Length (GL)": { source: 'B', op: '+', u: 0, s: 5, div: 1 }
         },
         "3 Track": {
-            "Shutter Height": { source: 'H', op: '-', u: 1, s: 5 },
-            "Shutter Length": { source: 'L', op: '-', u: 0, s: 8 },
-            "Glass Height": { source: 'H', op: '-', u: 2, s: 4 },
-            "Glass Length": { source: 'L', op: '+', u: 0, s: 5 }
-        },
-        "4 Track": {
-            "Shutter Height": { source: 'H', op: '-', u: 1, s: 5 },
-            "Shutter Length": { source: 'L', op: '-', u: 4, s: 4 },
-            "Glass Height": { source: 'H', op: '-', u: 2, s: 4 },
-            "Glass Length": { source: 'L', op: '+', u: 0, s: 5 }
-        },
-        "2 Track 4 Shutter": {
-            "Shutter Height": { source: 'H', op: '-', u: 1, s: 5 },
-            "Shutter Length": { source: 'L', op: '-', u: 1, s: 1 },
-            "Glass Height": { source: 'H', op: '-', u: 2, s: 4 },
-            "Glass Length": { source: 'L', op: '+', u: 0, s: 5 }
+            "Handle (H)": { source: 'TH', op: '-', u: 1, s: 4, div: 1 },
+            "Bearing Pati (B)": { source: 'TL', op: '-', u: 8, s: 0, div: 3 },
+            "Glass Height (GH)": { source: 'TH', op: '-', u: 4, s: 0, div: 1 },
+            "Glass Length (GL)": { source: 'B', op: '+', u: 0, s: 5, div: 1 }
         }
     },
     "60mm": {
         "2 Track": {
-            "Shutter Height": { source: 'H', op: '-', u: 1, s: 5 },
-            "Shutter Length": { source: 'L', op: '+', u: 0, s: 6 },
-            "Glass Height": { source: 'H', op: '-', u: 4, s: 0.5 },
-            "Glass Length": { source: 'L', op: '-', u: 4, s: 0.5 }
+            "Handle (H)": { source: 'TH', op: '-', u: 1, s: 4, div: 1 },
+            "Bearing Pati (B)": { source: 'TL', op: '+', u: 0, s: 6, div: 2 },
+            "Glass Height (GH)": { source: 'TH', op: '-', u: 4, s: 1, div: 1 },
+            "Glass Length (GL)": { source: 'B', op: '-', u: 4, s: 1, div: 1 }
         },
         "3 Track": {
-            "Shutter Height": { source: 'H', op: '-', u: 1, s: 5 },
-            "Shutter Length": { source: 'L', op: '+', u: 0, s: 0 },
-            "Glass Height": { source: 'H', op: '-', u: 4, s: 1 },
-            "Glass Length": { source: 'L', op: '-', u: 4, s: 1 }
+            "Handle (H)": { source: 'TH', op: '-', u: 1, s: 4, div: 1 },
+            "Bearing Pati (B)": { source: 'TL', op: '+', u: 2, s: 6, div: 3 },
+            "Glass Height (GH)": { source: 'TH', op: '-', u: 4, s: 1, div: 1 },
+            "Glass Length (GL)": { source: 'B', op: '-', u: 4, s: 1, div: 1 }
         },
         "4 Track": {
-            "Shutter Height": { source: 'H', op: '-', u: 1, s: 5 },
-            "Shutter Length": { source: 'L', op: '+', u: 0, s: 0 },
-            "Glass Height": { source: 'H', op: '-', u: 4, s: 1 },
-            "Glass Length": { source: 'L', op: '-', u: 4, s: 1 }
-        },
-        "2 Track 4 Shutter": {
-            "Shutter Height": { source: 'H', op: '-', u: 1, s: 5 },
-            "Shutter Length": { source: 'L', op: '+', u: 0, s: 0 },
-            "Glass Height": { source: 'H', op: '-', u: 4, s: 1 },
-            "Glass Length": { source: 'L', op: '-', u: 4, s: 1 }
+            "Handle (H)": { source: 'TH', op: '-', u: 1, s: 4, div: 1 },
+            "Bearing Pati (B)": { source: 'TL', op: '+', u: 5, s: 0, div: 4 },
+            "Glass Height (GH)": { source: 'TH', op: '-', u: 4, s: 1, div: 1 },
+            "Glass Length (GL)": { source: 'B', op: '-', u: 4, s: 1, div: 1 }
         }
     },
-    "65mm (Domal)": {
+    "65mm": {
         "2 Track": {
-            "Shutter Height": { source: 'H', op: '-', u: 2, s: 6 },
-            "Shutter Length": { source: 'L', op: '-', u: 0, s: 3 },
-            "Glass Height": { source: 'H', op: '-', u: 4, s: 1 },
-            "Glass Length": { source: 'L', op: '-', u: 4, s: 1 }
+            "Handle (H)": { source: 'TH', op: '-', u: 2, s: 6, div: 1 },
+            "Bearing Pati (B)": { source: 'TL', op: '-', u: 0, s: 4, div: 2 },
+            "Glass Height (GH)": { source: 'TH', op: '-', u: 4, s: 1, div: 1 },
+            "Glass Length (GL)": { source: 'B', op: '-', u: 4, s: 1, div: 1 }
         },
         "3 Track": {
-            "Shutter Height": { source: 'H', op: '-', u: 2, s: 6 },
-            "Shutter Length": { source: 'L', op: '+', u: 2, s: 2 },
-            "Glass Height": { source: 'H', op: '-', u: 4, s: 1 },
-            "Glass Length": { source: 'L', op: '-', u: 4, s: 1 }
-        },
-        "4 Track": {
-            "Shutter Height": { source: 'H', op: '-', u: 2, s: 6 },
-            "Shutter Length": { source: 'L', op: '+', u: 4, s: 6 },
-            "Glass Height": { source: 'H', op: '-', u: 4, s: 1 },
-            "Glass Length": { source: 'L', op: '-', u: 4, s: 1 }
-        },
-        "2 Track 4 Shutter": {
-            "Shutter Height": { source: 'H', op: '-', u: 2, s: 6 },
-            "Shutter Length": { source: 'L', op: '+', u: 0, s: 0 },
-            "Glass Height": { source: 'H', op: '-', u: 4, s: 1 },
-            "Glass Length": { source: 'L', op: '-', u: 4, s: 1 }
-        }
-    },
-    "Openable (P - Pipe)": {
-        "40mm": {
-            "Shutter Height": { source: 'H', op: '-', u: 1, s: 2 },
-            "Shutter Length": { source: 'L', op: '-', u: 4, s: 3 },
-            "Glass Height": { source: 'H', op: '-', u: 3, s: 4 },
-            "Glass Length": { source: 'L', op: '-', u: 0, s: 0 }
-        },
-        "60mm": {
-            "Shutter Height": { source: 'H', op: '-', u: 1, s: 2 },
-            "Shutter Length": { source: 'L', op: '-', u: 1, s: 3 },
-            "Glass Height": { source: 'H', op: '-', u: 5, s: 5 },
-            "Glass Length": { source: 'L', op: '-', u: 5, s: 7 }
-        }
-    },
-    "Openable (R - 40)": {
-        "Single Shutter": {
-            "Shutter Height": { source: 'H', op: '-', u: 1, s: 2 },
-            "Shutter Length": { source: 'L', op: '-', u: 1, s: 5 },
-            "Glass Height": { source: 'H', op: '-', u: 0, s: 3 },
-            "Glass Length": { source: 'L', op: '-', u: 0, s: 3 }
-        },
-        "Double Shutter": {
-            "Shutter Height": { source: 'H', op: '-', u: 1, s: 2 },
-            "Shutter Length": { source: 'L', op: '-', u: 1, s: 7 },
-            "Glass Height": { source: 'H', op: '-', u: 0, s: 3 },
-            "Glass Length": { source: 'L', op: '-', u: 0, s: 3 }
+            "Handle (H)": { source: 'TH', op: '-', u: 2, s: 6, div: 1 },
+            "Bearing Pati (B)": { source: 'TL', op: '+', u: 2, s: 0, div: 3 },
+            "Glass Height (GH)": { source: 'TH', op: '-', u: 4, s: 1, div: 1 },
+            "Glass Length (GL)": { source: 'B', op: '-', u: 4, s: 1, div: 1 }
         }
     }
 };
 
 class ConfigManager {
     static getFormulas() {
-        // v3 key to ensure we don't pick up old corrupted data
-        const saved = localStorage.getItem('windowCalc_formulas_v3');
+        // Bump to v4 to force new client-requested 4-step structure
+        const saved = localStorage.getItem('windowCalc_formulas_v5');
         if (saved) return JSON.parse(saved);
         return DEFAULT_CONFIG;
     }
 
     static saveFormulas(formulas) {
-        localStorage.setItem('windowCalc_formulas_v3', JSON.stringify(formulas));
+        localStorage.setItem('windowCalc_formulas_v5', JSON.stringify(formulas));
     }
 
     static resetDefaults() {
-        localStorage.removeItem('windowCalc_formulas_v3');
+        localStorage.removeItem('windowCalc_formulas_v5');
         return DEFAULT_CONFIG;
     }
 }
@@ -286,94 +237,76 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function calculate() {
         errorMessage.hidden = true;
-        resultsSection.hidden = true;
-        resultsGrid.innerHTML = '';
-
         const type = windowTypeSelect.value;
-        const subtype = windowSubtypeSelect.value;
+        const sub = windowSubtypeSelect.value;
+        const formulas = currentConfig[type][sub];
 
-        if (!currentConfig[type] || !currentConfig[type][subtype]) {
-            showError("Invalid Window configuration selected.");
+        const TL = new Dimension(lengthUnit.value, lengthSub.value);
+        const TH = new Dimension(heightUnit.value, heightSub.value);
+
+        if (isNaN(TL.u) || isNaN(TH.u)) {
+            showError("Please enter valid units.");
             return;
         }
 
-        const lUnit = parseInt(lengthUnit.value) || 0;
-        const lSub = parseInt(lengthSub.value) || 0;
-        const hUnit = parseInt(heightUnit.value) || 0;
-        const hSub = parseInt(heightSub.value) || 0;
+        const resultsTableBody = document.getElementById('resultsTableBody');
+        resultsTableBody.innerHTML = '';
+        const resultsMap = {};
 
-        const L = new Dimension(lUnit, lSub);
-        const H = new Dimension(hUnit, hSub);
+        // Mapping keys to table columns
+        const keys = [
+            { key: "Bearing Pati (B)", col: "B" },
+            { key: "Handle (H)", col: "H" },
+            { key: "Glass Height (GH)", col: "H(G)" },
+            { key: "Glass Length (GL)", col: "W(G)" }
+        ];
 
-        const formulas = currentConfig[type][subtype];
+        keys.forEach(item => {
+            const rule = formulas[item.key];
+            if (!rule) return;
 
-        const categories = {
-            "Shutter": [],
-            "Glass": [],
-            "Frame": [],
-            "Other": []
-        };
+            let base;
+            if (rule.source === 'TH') base = TH;
+            else if (rule.source === 'TL') base = TL;
+            else if (rule.source === 'B') base = resultsMap["Bearing Pati (B)"] || new Dimension(0, 0);
+            else base = TL;
 
-
-
-        for (const [key, rule] of Object.entries(formulas)) {
-            let val = (rule.source === 'L') ? L : H;
             const delta = new Dimension(rule.u, rule.s);
+            let res;
+            if (rule.op === '+') res = base.add(delta);
+            else res = base.subtract(delta);
 
-            let result;
-            if (rule.op === '+') result = val.add(delta);
-            else result = val.subtract(delta);
-
-            const keyLower = key.toLowerCase();
-            let cat = 'Other';
-            if (keyLower.includes('shutter')) cat = 'Shutter';
-            else if (keyLower.includes('glass')) cat = 'Glass';
-            else if (keyLower.includes('frame')) cat = 'Frame';
-
-            // Check for negative result (Not Possible)
-            let displayVal = result.toString();
-            let isError = false;
-
-            if (result.toSubunits() < 0) {
-                displayVal = "Not Possible";
-                isError = true;
+            if (rule.div && rule.div > 1) {
+                res = res.divide(rule.div);
             }
+            resultsMap[item.key] = res;
+        });
 
-            // Build formula hint e.g. "- 1u 5s"
-            const formulaHint = `${rule.op} ${rule.u}u ${rule.s}s`;
+        // Create the row
+        const tr = document.createElement('tr');
 
-            categories[cat].push({ label: key, value: displayVal, isError: isError, hint: formulaHint });
+        // NAME Cell
+        const tdName = document.createElement('td');
+        tdName.className = 'result-name-cell';
+        tdName.innerHTML = `${type}<br>${sub}`;
+        tr.appendChild(tdName);
 
+        // Data Cells
+        keys.forEach(item => {
+            const val = resultsMap[item.key];
+            const td = document.createElement('td');
+            if (val.toSubunits() < 0) {
+                td.textContent = "N/A";
+                td.classList.add('error-text');
+            } else {
+                td.textContent = `${val.u}.${val.s}`;
+            }
+            tr.appendChild(td);
+        });
 
-        }
-
-
-
-        for (const [catName, items] of Object.entries(categories)) {
-            if (items.length === 0) continue;
-            const card = document.createElement('div');
-            card.className = 'result-card';
-            const title = document.createElement('h3');
-            title.textContent = `${catName} Dimensions`;
-            card.appendChild(title);
-            items.forEach(item => {
-                const row = document.createElement('div');
-                row.className = 'result-row';
-                const valClass = item.isError ? 'result-value error-text' : 'result-value';
-                row.innerHTML = `
-                    <span class="result-label">
-                        ${item.label}
-                        <span class="formula-hint">${item.hint}</span>
-                    </span>
-                    <span class="${valClass}">${item.value}</span>
-                `;
-                card.appendChild(row);
-            });
-            resultsGrid.appendChild(card);
-        }
-
+        resultsTableBody.appendChild(tr);
         resultsSection.hidden = false;
-        toggleInputs(true); // Lock inputs after calculation
+        toggleInputs(true);
 
         if (window.innerWidth < 600) {
             resultsSection.scrollIntoView({ behavior: 'smooth' });
@@ -392,7 +325,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function clearApp() {
         errorMessage.hidden = true;
         resultsSection.hidden = true;
-        resultsGrid.innerHTML = '';
+        const resultsTableBody = document.getElementById('resultsTableBody');
+        if (resultsTableBody) resultsTableBody.innerHTML = '';
 
         // Reset inputs
         lengthUnit.value = '';
@@ -413,10 +347,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Config Logic ---
     const columns = [
-        { label: "Shutter Height", key: "Shutter Height", source: 'H' },
-        { label: "Shutter Length", key: "Shutter Length", source: 'L' },
-        { label: "Glass Height", key: "Glass Height", source: 'H' },
-        { label: "Glass Length", key: "Glass Length", source: 'L' }
+        { label: "Handle (H)", key: "Handle (H)", source: 'TH' },
+        { label: "Bearing Pati (B)", key: "Bearing Pati (B)", source: 'TL' },
+        { label: "Glass Height (GH)", key: "Glass Height (GH)", source: 'TH' },
+        { label: "Glass Length (GL)", key: "Glass Length (GL)", source: 'B' }
     ];
 
     configTypeSelect.addEventListener('change', renderFormulaTable);
@@ -458,7 +392,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!rule) rule = { op: '-', u: 0, s: 0, source: col.source };
 
                 td.innerHTML = `
-                    <div class="cell-input-group" data-subtype="${subtype}" data-key="${col.key}" data-source="${col.source}">
+                    <div class="cell-input-group" data-subtype="${subtype}" data-key="${col.key}">
+                        <select class="cell-source">
+                             <option value="TL" ${rule.source === 'TL' ? 'selected' : ''}>TL</option>
+                             <option value="TH" ${rule.source === 'TH' ? 'selected' : ''}>TH</option>
+                             <option value="B" ${rule.source === 'B' ? 'selected' : ''}>B</option>
+                        </select>
                         <select class="cell-op">
                             <option value="-" ${rule.op === '-' ? 'selected' : ''}>-</option>
                             <option value="+" ${rule.op === '+' ? 'selected' : ''}>+</option>
@@ -467,6 +406,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <select class="cell-s">
                              ${generateSubunitOptions(rule.s)}
                         </select>
+                        <div class="div-wrap">/ <input type="number" class="cell-div" value="${rule.div || 1}" min="1"></div>
                     </div>
                 `;
                 tr.appendChild(td);
@@ -497,12 +437,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
             inputs.forEach(group => {
                 const key = group.dataset.key;
-                const source = group.dataset.source;
+                const source = group.querySelector('.cell-source').value;
                 const op = group.querySelector('.cell-op').value;
                 const u = parseInt(group.querySelector('.cell-u').value) || 0;
                 const s = parseInt(group.querySelector('.cell-s').value) || 0;
+                const div = parseInt(group.querySelector('.cell-div').value) || 1;
 
-                currentConfig[type][subtype][key] = { source, op, u, s };
+                currentConfig[type][subtype][key] = { source, op, u, s, div };
             });
         });
 
