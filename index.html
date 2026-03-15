@@ -40,20 +40,20 @@
                 </div>
             </div>
 
-            <!-- Row 2: Height + Length -->
+            <!-- Row 2: Length + Height -->
             <div class="input-row">
-                <div class="input-group half">
-                    <label>Height</label>
-                    <div class="measure-input">
-                        <input type="number" id="heightUnit" placeholder="Unit" min="0" step="1">
-                        <select id="heightSub" class="subunit-select"></select>
-                    </div>
-                </div>
                 <div class="input-group half">
                     <label>Length</label>
                     <div class="measure-input">
                         <input type="number" id="lengthUnit" placeholder="Unit" min="0" step="1">
                         <select id="lengthSub" class="subunit-select"></select>
+                    </div>
+                </div>
+                <div class="input-group half">
+                    <label>Height</label>
+                    <div class="measure-input">
+                        <input type="number" id="heightUnit" placeholder="Unit" min="0" step="1">
+                        <select id="heightSub" class="subunit-select"></select>
                     </div>
                 </div>
             </div>
@@ -68,8 +68,21 @@
 
         <section id="results" class="results-section" hidden>
             <h2>Results</h2>
-            <div id="resultsGrid" class="results-grid">
-                <!-- Results generated here -->
+            <div class="results-table-wrapper">
+                <table class="results-table">
+                    <thead>
+                        <tr>
+                            <th>NAME</th>
+                            <th>B</th>
+                            <th>H</th>
+                            <th>H(G)</th>
+                            <th>W(G)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="resultsTableBody">
+                        <!-- Result row generated here -->
+                    </tbody>
+                </table>
             </div>
         </section>
     </div>
@@ -92,10 +105,10 @@
                     <thead>
                         <tr>
                             <th>Subtype</th>
-                            <th>Shutter Height<br><small>(uses Height)</small></th>
-                            <th>Shutter Length<br><small>(uses Length)</small></th>
-                            <th>Glass Height<br><small>(uses Height)</small></th>
-                            <th>Glass Length<br><small>(uses Length)</small></th>
+                            <th>Handle (H)</th>
+                            <th>Bearing Pati (B)</th>
+                            <th>Glass Height (GH)</th>
+                            <th>Glass Length (GL)</th>
                         </tr>
                     </thead>
                     <tbody id="formulaTableBody">
